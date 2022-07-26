@@ -1,0 +1,190 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.1.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     rhoEnergyFoam;
+
+startFrom       startTime;
+
+startTime       2.325;
+
+stopAt          endTime;
+
+endTime         4.65; //ending time t related to Modesti-Pirozzoli Paper
+
+deltaT          0.003;//
+
+writeControl    adjustableRunTime;
+
+writeInterval   0.025;//0.1;//1;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  12;
+
+writeCompression on;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+
+maxCo           1.0;//0.5;
+
+maxDeltaT       1.;//0.01;
+
+pressArtDiff    false; //activate artificial diffusion on pressure
+convArtDiff     false; //activate artificial diffusion on pressure
+
+ducLevelPress       1.00;
+ducLevelConv        1.00;
+epsilon             0.00014; 
+minfty              0.0001; // Reference Mach^2 number needed by AUSM flux (turbulent Mach number for HIT)
+kp                  0.25;//25;
+ku                  0.75;//75;
+
+functions
+{
+    /*k_sgs
+    {
+        type               volFieldValue;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        enabled            true;
+        writeControl       runTime; //outputTime;
+        writeInterval      0.001;
+	writeFields        true;
+        log                false;     
+        valueOutput        false;
+        source             all;       //cellZone;
+        sourceName         c0;
+        operation          volAverage;
+        fields
+        (
+            k
+        );
+    }*/
+
+    /*k_res
+    {
+        type               volFieldValue;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        enabled            true;
+        writeControl       runTime; //outputTime;
+        writeInterval      0.001;
+	writeFields        true;
+        log                false;     
+        valueOutput        false;
+        source             all;       //cellZone;
+        sourceName         c0;
+        operation          volAverage;
+        fields
+        (
+            k_res
+        );
+    }*/
+
+    /*enstrophy
+    {
+        type               volFieldValue;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        enabled            true;
+        writeControl       runTime; //outputTime;
+        writeInterval      0.001;
+	writeFields        true;
+        log                false;     
+        valueOutput        false;
+        source             all;       //cellZone;
+        sourceName         c0;
+        operation          volAverage;
+        fields
+        (
+            enstrophy
+        );
+    
+    }*/
+    
+    /*vorticity
+    {
+        type               volFieldValue;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        enabled            true;
+        writeControl       runTime; //outputTime;
+        writeInterval      0.001;
+	writeFields        true;
+        log                false;     
+        valueOutput        false;
+        source             all;       //cellZone;
+        sourceName         c0;
+        operation          volAverage;
+        fields
+        (
+            vorticity
+        );
+    
+    }*/
+    
+    /*vorticity
+    {
+        type               volFieldValue; //expressionField; //fieldExpression;
+        autowrite          true;
+        dimension          [0 0 -1 0 0 0 0];
+        fieldName          "vorticity";
+        expression         "curl(U)";
+        verbose            true;
+        autowrite          true;
+        writeControl       outputTime; 
+    }*/ 
+
+    /*fieldAverage
+    {
+        type            fieldAverage;
+        functionObjectLibs ( "libfieldFunctionObjects.so" );
+        enabled         true;
+        timeStart       0.01;
+        timeEnd         10.0;
+        writeControl    outputTime;
+        fields
+        (
+            k
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+
+            U
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+
+	    vorticity
+	    {
+	    	mean	    on;
+		prime2Mean  on;
+		base        time;
+	    }
+        );
+    }*/
+}
+
+// ************************************************************************* //
